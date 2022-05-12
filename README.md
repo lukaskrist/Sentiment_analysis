@@ -14,6 +14,8 @@ Take the most positive ones and apply
 Compare data from different reddits
 
 Possible extentions:
+Show data through Microsoft Power BI
+Get data into SQL and make simple changes to it
 Check different social media
 Make automatically update on a server once or twice daily. 
 Make sentiment data that actually uses the terminology on these websites. 
