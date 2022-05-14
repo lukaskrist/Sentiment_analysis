@@ -87,7 +87,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 fig,ax = plt.subplots(figsize=(8,8))
-counts = df.label.value_counts(normalize=True)*100
+counts = df.pos.value_counts(normalize=True)*100
 sns.barplot(x=counts.index,y=counts,ax=ax)
 
     

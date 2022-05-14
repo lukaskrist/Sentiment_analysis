@@ -8,7 +8,7 @@ Created on Thu May 12 13:25:21 2022
 
 import pandas as pd
 import yfinance as yf
-from yahoofinancials import YahooFinancials
+#from yahoofinancials import YahooFinancials
 
 def stockdata(stock):
     data = yf.download(stock)
