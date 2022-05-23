@@ -12,22 +12,21 @@ from yahoo_fin import stock_info as si
 #from yahoofinancials import YahooFinancials
 
 def stockdata(stock):
-    data = yf.download(stock)
     ticker = yf.Ticker(stock)
     data_df = ticker.history(period="60d",interval=("5m"))
-    data_df['Close'].plot(title="TSLA's stock price")
+    #data_df['Close'].plot(title="TSLA's stock price")
     return data_df
 
 stockdata('TSLA')
 
 def stock_names():
-    # gather stock symbols from major US exchanges
+    # get most important datas
     df1 = pd.DataFrame( si.tickers_sp500() )
     df2 = pd.DataFrame( si.tickers_nasdaq() )
     df3 = pd.DataFrame( si.tickers_dow() )
     df4 = pd.DataFrame( si.tickers_other() )
 
-    # convert DataFrame to list, then to sets
+    # Get to sets to make sure things does not overlap
     sym1 = set( symbol for symbol in df1[0].values.tolist() )
     sym2 = set( symbol for symbol in df2[0].values.tolist() )
     sym3 = set( symbol for symbol in df3[0].values.tolist() )

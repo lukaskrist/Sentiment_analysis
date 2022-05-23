@@ -27,70 +27,74 @@ reddit = praw.Reddit(client_id = "P-oTGSQtizlNcKQb39kvQw",
 
 sub_IDs = []
 subreddit = reddit.subreddit('wallstreetbets')
-cleaned_output = []
 limits = 5
 
-
-for submission in subreddit.hot(limit=limits):
+def comment_clean(subreddit = subreddit,limits = 5):
+    cleaned_output = []
+    for submission in subreddit.hot(limit=limits):
     
-    print(submission.title)
+        print(submission.title)
     
-    post1 = reddit.submission(str(submission.id))
+        post1 = reddit.submission(str(submission.id))
+        
+        comments_all = []
+        post1.comments.replace_more(limit=None)
+        
+        for comments in post1.comments.list():
+            comments_all.append(comments.body)
+        
+        list1 = comments_all
+        list1 = [str(i) for i in list1]
+        
+        string_uncleaned = ' , '.join(list1)
+        
+        string_emojiless = emoji.get_emoji_regexp().sub(u'',string_uncleaned)
     
-    comments_all = []
-    post1.comments.replace_more(limit=None)
+        tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|http\S+')
+        tokenized_str = tokenizer.tokenize(string_emojiless)
     
-    for comments in post1.comments.list():
-        comments_all.append(comments.body)
+        lower_str_tokenized = [word.lower() for word in tokenized_str]
+        all_stops = nlp.Defaults.stop_words
     
-    list1 = comments_all
-    list1 = [str(i) for i in list1]
-    
-    string_uncleaned = ' , '.join(list1)
-    
-    string_emojiless = emoji.get_emoji_regexp().sub(u'',string_uncleaned)
-
-    tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|http\S+')
-    tokenized_str = tokenizer.tokenize(string_emojiless)
-
-    lower_str_tokenized = [word.lower() for word in tokenized_str]
-    all_stops = nlp.Defaults.stop_words
-
-    tokens_without_stops = [word for word in lower_str_tokenized
-                            if not word in all_stops]
-    
-    lemmatizer = WordNetLemmatizer()
-    lemmatizer_token = ([lemmatizer.lemmatize(w) for w in tokens_without_stops])
-    
-    cleaned_output.append(lemmatizer_token)
+        tokens_without_stops = [word for word in lower_str_tokenized
+                                if not word in all_stops]
+        
+        lemmatizer = WordNetLemmatizer()
+        lemmatizer_token = ([lemmatizer.lemmatize(w) for w in tokens_without_stops])
+        
+        cleaned_output.append(lemmatizer_token)
+    return cleaned_output
     
     
-    
+cleaned_output = comment_clean()
 from nltk.sentiment.vader import SentimentIntensityAnalyzer as SIA
 
-sia = SIA()
-results = []
-for i in range(limits):
-    for sentences in cleaned_output[i]:
-        pol_score = sia.polarity_scores(sentences)
-        pol_score['words'] = sentences
-        results.append(pol_score)
-        
-pd.set_option('display.max_columns',None,'max_colwidth',None)
-df = pd.DataFrame.from_records(results)
 
-print(pol_score)
+def sentiment(clean_comments):
+    sia = SIA()
+    results = []
+    for i in range(limits):
+        for sentences in cleaned_output[i]:
+            pol_score = sia.polarity_scores(sentences)
+            pol_score['words'] = sentences
+            results.append(pol_score)
+            
+    pd.set_option('display.max_columns',None,'max_colwidth',None)
+    df = pd.DataFrame.from_records(results)                                         #df: dataframe
+
+    print(pol_score)
+    return df
 
     
+    ''' 
+    import seaborn as sns
+    import matplotlib.pyplot as plt
     
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-fig,ax = plt.subplots(figsize=(8,8))
-counts_pos = df.pos.value_counts(normalize=True)*100
-counts_neg = df.neg.value_counts(normalize=True)*100
-
-sns.barplot(x = counts_pos.index,y=counts_pos,ax=ax)
-sns.barplot(x = counts_neg.index,y=counts_neg,ax=ax)
+    fig,ax = plt.subplots(figsize=(8,8))
+    counts_pos = df.pos.value_counts(normalize=True)*100
+    counts_neg = df.neg.value_counts(normalize=True)*100
     
+    sns.barplot(x = counts_pos.index,y=counts_pos,ax=ax)
+    sns.barplot(x = counts_neg.index,y=counts_neg,ax=ax)
     
+    '''
