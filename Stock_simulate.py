@@ -17,7 +17,7 @@ def stockdata(stock):
     #data_df['Close'].plot(title="TSLA's stock price")
     return data_df
 
-stockdata('TSLA')
+#stockdata('TSLA')
 
 def stock_names():
     # get most important datas
@@ -49,4 +49,4 @@ def stock_names():
     return sav_set
 
 
-print(stock_names())
+#print(stock_names())

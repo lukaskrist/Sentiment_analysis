@@ -33,7 +33,7 @@ def comment_clean(subreddit = subreddit,limits = 5):
     cleaned_output = []
     for submission in subreddit.hot(limit=limits):
     
-        print(submission.title)
+        #print(submission.title)
     
         post1 = reddit.submission(str(submission.id))
         
@@ -66,11 +66,11 @@ def comment_clean(subreddit = subreddit,limits = 5):
     return cleaned_output
     
     
-cleaned_output = comment_clean()
+#cleaned_output = comment_clean()
 from nltk.sentiment.vader import SentimentIntensityAnalyzer as SIA
 
 
-def sentiment(clean_comments):
+def sentiment(cleaned_output):
     sia = SIA()
     results = []
     for i in range(limits):
