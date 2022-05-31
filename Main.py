@@ -14,9 +14,12 @@ names = list(names)
 
 
 i = 0
+
 for comment in comments:
-    if str(comment).lower() == str(any(names)).lower():
-        i += 1
+    for com in comment:
+        for name in names:
+            if str(com).lower() == str(name).lower():
+                i += 1
         
-print(comments[0:10])
-#print(names[0:10])
+        
+print(names[0:10])
