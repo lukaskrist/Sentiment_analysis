@@ -9,15 +9,12 @@ Created on Thu May 12 13:25:21 2022
 import pandas as pd
 import yfinance as yf
 from yahoo_fin import stock_info as si
-#from yahoofinancials import YahooFinancials
 
 def stockdata(stock):
     ticker = yf.Ticker(stock)
     data_df = ticker.history(period="60d",interval=("5m"))
     #data_df['Close'].plot(title="TSLA's stock price")
     return data_df
-
-#stockdata('TSLA')
 
 def stock_names():
     # get most important datas
@@ -48,5 +45,3 @@ def stock_names():
             
     return sav_set
 
-
-#print(stock_names())

@@ -15,7 +15,8 @@ names = list(names)
 
 i = 0
 for comment in comments:
-    if comment == any(lowercase(names)):
+    if str(comment).lower() == str(any(names)).lower():
         i += 1
         
-print(i)
+print(comments[0:10])
+#print(names[0:10])
