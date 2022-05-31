@@ -4,18 +4,29 @@ The goal of this is to create a sentiment analysis, in the same way as Michael R
 
 Implemented:
 Get data from reddit
+
 Get comments tokenized and emoji-less
+
 Get data for different stocks downloaded and in the right format
+
+Download all names of stocks
 
 
 Not yet implemented:
-Download all names of stocks and seeing if they have positive or negative words associated with them. 
+
+Positive and negative stocks?
+
 Take the most positive ones and apply 
+
 Compare data from different reddits
 
 Possible extentions:
 Show data through Microsoft Power BI
+
 Get data into SQL and make simple changes to it
+
 Check different social media
+
 Make automatically update on a server once or twice daily. 
+
 Make sentiment data that actually uses the terminology on these websites. 
