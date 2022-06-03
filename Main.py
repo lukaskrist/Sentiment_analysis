@@ -6,12 +6,16 @@ Created on Mon May 23 18:34:44 2022
 """
 from Stock_simulate import *
 from Reddit_data import *
-
+import enchant as ec
 
 names = stock_names()
 comments = comment_clean()
 names = list(names)
 
+d = ec.Dict("en_US")
+for name in names:
+    if d.check(name) == True:
+        names.remove('name')
 
 i = 0
 
