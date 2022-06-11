@@ -23,11 +23,9 @@ dic = {}
 for comment in comments:
     for com in comment:
         for name in names:
-            if str(com) == str(name):
+            if str(com).lower() == str(name).lower():
                 if name in dic:
                     dic[name] += 1
                 else:
                     dic[name] = 1
         
-print(dic)   
-print(names[0:10])
